@@ -1,18 +1,18 @@
-#include "greedy_solver.h"
+#include "heuristica_1.h"
 #include <iostream>
 using namespace std;
 
-GreedySolver::GreedySolver() {}
+Heuristica1Solver::Heuristica1Solver() {}
 
-GreedySolver::GreedySolver(ReadInstance &instance) {
+Heuristica1Solver::Heuristica1Solver(ReadInstance &instance) {
     this->_instance = instance;
     this->_solution;
     this->_objective_value = 0;
 }
 //POV VENDEDORES
-void GreedySolver::solve() {
+void Heuristica1Solver::solve() {
     vector<int> capacidad_restante = this->_instance.capacidades;
-    int depositos_sin_asignar = 0; 
+    int vendedores_sin_asignar = 0; 
     int demanda_maxima = 0;
     
     int j = 0;
@@ -45,21 +45,21 @@ void GreedySolver::solve() {
             capacidad_restante[i] = capacidad_restante[i]-this->_instance.demandas[j];
             _objective_value += this->_instance.costos[deposito_mas_barato][j];
         } else {
-            depositos_sin_asignar++;
+            vendedores_sin_asignar++;
         }
 
         j++;
     }
 
-    _objective_value += depositos_sin_asignar*demanda_maxima*3;
+    _objective_value += vendedores_sin_asignar*demanda_maxima*3;
 
 }
 
 
-double GreedySolver::getObjectiveValue() const {
+double Heuristica1Solver::getObjectiveValue() const {
     return this->_objective_value;
 }
 
-vector<int> GreedySolver::getSolution() const {
+vector<int> Heuristica1Solver::getSolution() const {
     return this->_solution;
 }

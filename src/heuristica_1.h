@@ -1,5 +1,5 @@
-#ifndef GREEDY_SOLVER_H
-#define GREEDY_SOLVER_H
+#ifndef HEURISTICA_1_H
+#define HEURISTICA_1_H
 
 #include <cstdint>
 #include <vector>
@@ -7,11 +7,11 @@
 #include "read_instance.h"
 
 
-class GreedySolver
+class Heuristica1Solver
 {
 	public:
-        GreedySolver();
-        GreedySolver(ReadInstance &instance);
+        Heuristica1Solver();
+        Heuristica1Solver(ReadInstance &instance);
 
         void setInstance(ReadInstance &instance);
         void solve();

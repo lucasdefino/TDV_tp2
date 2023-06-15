@@ -1,7 +1,9 @@
 #include <string>
 #include <iostream>
 #include "read_instance.h"
-#include "greedy_solver.h"
+#include "heuristica_1.h"
+#include "heuristica_2.h"
+
 
 
 int main(int argc, char** argv) {
@@ -9,21 +11,15 @@ int main(int argc, char** argv) {
 
     ReadInstance instance(filename);
 
-    GreedySolver solve(instance);
+    Heuristica2Solver heuristica2(instance);
 
-    solve.solve();
+    heuristica2.solve();
 
-    std::vector<int> solucion = solve.getSolution();
-
-    for(auto i : solucion){
+    for(auto i : heuristica2.getSolution()){
         std::cout << i << " ";
     }
-    
-    std::cout << std::endl;
 
-    std::cout << solucion.size() << std::endl;
-
-    std::cout << solve.getObjectiveValue() << std::endl; 
+    std::cout <<  std::endl << heuristica2.getObjectiveValue() << std::endl;
 
     return 0;
 }
