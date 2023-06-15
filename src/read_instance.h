@@ -18,7 +18,7 @@ class ReadInstance
         int m;
         // cantidad de vendedores
         int n;
-        // matriz de costo m x n. costos[i][j] contiene el costo incurrido si j es asignado a i con i perteneciente a depositos y j a vendedores
+        // matriz de costos m x n. costos[i][j] contiene el costo incurrido si j es asignado a i con i perteneciente a depositos y j a vendedores
         std::vector<std::vector<int>> costos;
         // vector de longitud n. demandas[j] contiene la demanda del vendedor j para todo deposito i en M
         std::vector<int> demandas;

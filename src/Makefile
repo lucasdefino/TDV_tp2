@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -std=c++17
-SRC = read_instance.cpp main.cpp
+SRC = greedy_solver.cpp read_instance.cpp main.cpp
 OBJ = $(SRC:.cpp=.o)
 EXEC = gap_simulator
 
