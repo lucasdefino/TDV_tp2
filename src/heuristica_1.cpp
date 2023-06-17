@@ -8,10 +8,11 @@ Heuristica1Solver::Heuristica1Solver(ReadInstance &instance) {
     this->_instance = instance;
     this->_solution;
     this->_objective_value = 0;
+    this->_capacidades_restantes;
 }
 //POV VENDEDORES
 void Heuristica1Solver::solve() {
-    vector<int> capacidad_restante = this->_instance.capacidades;
+    this->_capacidades_restantes = this->_instance.capacidades;
     int vendedores_sin_asignar = 0; 
     int demanda_maxima = 0;
     
@@ -26,7 +27,7 @@ void Heuristica1Solver::solve() {
             
             if (costo_actual < menor_costo){
 
-                if(capacidad_restante[i]-this->_instance.demandas[j] >= 0){
+                if(this->_capacidades_restantes[i]-this->_instance.demandas[j] >= 0){
                     deposito_mas_barato=i;
                     menor_costo=costo_actual;
                 }
@@ -42,7 +43,7 @@ void Heuristica1Solver::solve() {
         }
 
         if (deposito_mas_barato != -1) {
-            capacidad_restante[i] = capacidad_restante[i]-this->_instance.demandas[j];
+            this->_capacidades_restantes[i] -= this->_instance.demandas[j];
             _objective_value += this->_instance.costos[deposito_mas_barato][j];
         } else {
             vendedores_sin_asignar++;
@@ -62,4 +63,8 @@ double Heuristica1Solver::getObjectiveValue() const {
 
 vector<int> Heuristica1Solver::getSolution() const {
     return this->_solution;
+}
+
+vector<int> Heuristica1Solver::getCapRes() const {
+    return this->_capacidades_restantes;
 }
