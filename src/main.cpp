@@ -21,5 +21,7 @@ int main(int argc, char** argv) {
 
     std::cout <<  std::endl << heuristica2.getObjectiveValue() << std::endl;
 
+    
+
     return 0;
 }
