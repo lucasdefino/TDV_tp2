@@ -1,5 +1,5 @@
-#ifndef BUSQUEDA_LOCAL_1_H
-#define BUSQUEDA_LOCAL_1_H
+#ifndef BUSQUEDA_LOCAL_2_H
+#define BUSQUEDA_LOCAL_2_H
 
 #include <cstdint>
 #include <vector>
@@ -8,14 +8,14 @@
 #include "heuristica_2.h"
 #include "heuristica_1.h"
 
-class BusquedaLocal1
+class BusquedaLocal2
 {
     public:
-    BusquedaLocal1();
-    BusquedaLocal1(ReadInstance &instance);
+    BusquedaLocal2();
+    BusquedaLocal2(ReadInstance &instance);
 
 
-    void primerMejor(double objective_value, std::vector<int> solution, std::vector<int> capres);
+    void MejorMejor(double objective_value, std::vector<int> solution, std::vector<int> capres);
     double getObjectiveValue() const;
     std::vector<int> getSolution() const;
     std::vector<int> getCapRes() const;
