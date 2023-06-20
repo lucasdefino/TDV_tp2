@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
 
     ReadInstance instance(filename);
 
-    Heuristica1Solver heuristica1(instance);
+    Heuristica2Solver heuristica1(instance);
 
     heuristica1.solve();
 
@@ -21,17 +21,28 @@ int main(int argc, char** argv) {
 
     std::cout <<  std::endl << heuristica1.getObjectiveValue() << std::endl;
 
-    BusquedaLocal2 MejorMejor(instance);
+    BusquedaLocal2 BL(instance);
 
-    MejorMejor.MejorMejor(heuristica1.getObjectiveValue(), heuristica1.getSolution(), heuristica1.getCapRes());
+    BL.MejorMejor(heuristica1.getObjectiveValue(), heuristica1.getSolution(), heuristica1.getCapRes());
+    
+    int i = 0;
+    while (i<2)
+    {
+        BL.MejorMejor(BL.getObjectiveValue(), BL.getSolution(), BL.getCapRes());
+        i++;
+    }
+    
 
+
+
+    
     std::cout << std::endl;
 
-    for(auto i : MejorMejor.getSolution()){
+    for(auto i : BL.getSolution()){
         std::cout << i << " ";
     }
 
-    std::cout <<  std::endl << MejorMejor.getObjectiveValue() << std::endl;
+    std::cout <<  std::endl << BL.getObjectiveValue() << std::endl;
     
 
     return 0;
