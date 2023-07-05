@@ -2,10 +2,14 @@
 
 Solucion::Solucion() {}
 
-Solucion::Solucion(int n, int m) {
-    this->_n = n;
-    this->_m = m;
-    this->_asigancion_vendedores = std::vector<int>(n, -1);
+Solucion::Solucion(ReadInstance &instance) {
+    this->_n = instance.n;
+    this->_m = instance.m;
+    this->_objective_value = 0;
+    this->_vendedores_asignados = 0;
+    this->_asigancion_vendedores = std::vector<int>(instance.n, -1);
+    this->_capacidades_restantes = instance.capacidades;
+    this->_demandas = instance.demandas;
 }
 
 int Solucion::getN() const {
@@ -18,6 +22,8 @@ int Solucion::getM() const {
 
 void Solucion::assign(int deposito, int vendedor) {
     this->_asigancion_vendedores[vendedor] = deposito;
+    this->_vendedores_asignados++;
+    this->_capacidades_restantes[deposito] -= this->_demandas[vendedor];
 }
 
 bool Solucion::isVendedorAsignado(int vendedor) const {
@@ -26,6 +32,18 @@ bool Solucion::isVendedorAsignado(int vendedor) const {
 
 int Solucion::getDepositoAsignado(int vendedor) const {
     return this->_asigancion_vendedores[vendedor];
+}
+
+int Solucion::getCapacidadRestante(int deposito) const {
+    return this->_capacidades_restantes[deposito];
+}
+
+int Solucion::getObjectiveValue() const {
+    return this->_objective_value;
+}
+
+int Solucion::getVendedoresAsignado() const {
+    return this->_vendedores_asignados;
 }
 
 // std::ostream& operator<<(std::ostream& os, const TaxiAssignmentSolution& solution) {

@@ -1,5 +1,5 @@
-#ifndef HEURISTICA_3_H
-#define HEURISTICA_3_H
+#ifndef HEURISTICA_0_H
+#define HEURISTICA_0_H
 
 #include <cstdint>
 #include <vector>
@@ -8,24 +8,22 @@
 #include "solucion.h"
 
 
-class Heuristica3
+class Heuristica0
 {
 	public:
-        Heuristica3();
-        Heuristica3(ReadInstance &instance);
+        Heuristica0();
+        Heuristica0(ReadInstance &instance);
 
         void solve();
         double getObjectiveValue() const;
         Solucion getSolucion() const;
         std::vector<int> getCapRes() const;
-
 	
 	private:
         ReadInstance _instance;
         Solucion _solucion;
         double _objective_value;
         std::vector<int> _capacidades_restantes;
-
 
 };
 

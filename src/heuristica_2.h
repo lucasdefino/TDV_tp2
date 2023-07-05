@@ -5,26 +5,25 @@
 #include <vector>
 #include <iostream>
 #include "read_instance.h"
+#include "solucion.h"
 
 
-class Heuristica2Solver
+class Heuristica2
 {
 	public:
-        Heuristica2Solver();
-        Heuristica2Solver(ReadInstance &instance);
+        Heuristica2();
+        Heuristica2(ReadInstance &instance);
 
         void solve();
         double getObjectiveValue() const;
-        std::vector<int> getSolution() const;
+        Solucion getSolucion() const;
         std::vector<int> getCapRes() const;
 
 	
 	private:
-        // Instance, problem and results attributes
         ReadInstance _instance;
-        //TaxiAssignmentSolution _solution;
+        Solucion _solucion;
         double _objective_value;
-        std::vector<int> _solution;
         std::vector<int> _capacidades_restantes;
 
 

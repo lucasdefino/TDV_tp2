@@ -3,26 +3,33 @@
 
 #include<vector>
 #include<iostream>
+#include "read_instance.h"
 
 class Solucion
 {
 	public:
         Solucion();
-        Solucion(int n, int m);
+        Solucion(ReadInstance &instance);
 
         int getN() const;
         int getM() const;
         void assign(int deposito, int vendedor);
         bool isVendedorAsignado(int vendedor) const;
-        int getVendedoresAsignado(int deposito) const;
+        int getVendedoresAsignado() const;
         int getDepositoAsignado(int vendedor) const;
+        int getCapacidadRestante(int deposito) const;
+        int getObjectiveValue() const;
 
         //friend std::ostream& operator<<(std::ostream& os, const Solucion& solution);
-
 	
 	private:
         int _n;
         int _m;
+        int _vendedores_asignados;
+        int _objective_value;
         std::vector<int> _asigancion_vendedores;
+        std::vector<int> _capacidades_restantes;
+        std::vector<int> _demandas;
+        
 };
 #endif
