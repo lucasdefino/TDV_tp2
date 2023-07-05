@@ -3,8 +3,7 @@
 #include "read_instance.h"
 #include "heuristica_1.h"
 #include "heuristica_2.h"
-#include "busqueda_local_1.h"
-#include "busqueda_local_2.h"
+#include "busqueda_local.h"
 
 int main(int argc, char** argv) {
     std::string filename = "instances/gap/gap_a/a05100";
@@ -23,18 +22,15 @@ int main(int argc, char** argv) {
 
     BusquedaLocal2 BL(instance);
 
-    BL.MejorMejor(heuristica1.getObjectiveValue(), heuristica1.getSolution(), heuristica1.getCapRes());
+    BL.Swap(heuristica1.getObjectiveValue(), heuristica1.getSolution(), heuristica1.getCapRes());
     
     int i = 0;
     while (i<2)
     {
-        BL.MejorMejor(BL.getObjectiveValue(), BL.getSolution(), BL.getCapRes());
+        BL.Swap(BL.getObjectiveValue(), BL.getSolution(), BL.getCapRes());
         i++;
     }
     
-
-
-
     
     std::cout << std::endl;
 

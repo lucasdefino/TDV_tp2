@@ -15,7 +15,7 @@ class BusquedaLocal2
     BusquedaLocal2(ReadInstance &instance);
 
 
-    void MejorMejor(double objective_value, std::vector<int> solution, std::vector<int> capres);
+    void Swap(double objective_value, std::vector<int> solution, std::vector<int> capres);
     double getObjectiveValue() const;
     std::vector<int> getSolution() const;
     std::vector<int> getCapRes() const;

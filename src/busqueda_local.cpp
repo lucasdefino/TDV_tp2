@@ -1,4 +1,4 @@
-#include "busqueda_local_2.h"
+#include "busqueda_local.h"
 #include <iostream>
 using namespace std;
 
@@ -11,7 +11,7 @@ BusquedaLocal2::BusquedaLocal2(ReadInstance &instance) {
     this->_solution;
 }
 
-void BusquedaLocal2::MejorMejor(double objective_value,vector<int> solution, vector<int> capres) {
+void BusquedaLocal2::Swap(double objective_value,vector<int> solution, vector<int> capres) {
     this->_solution = solution;
     this->_capacidades_restantes = capres;
     this->_objective_value = objective_value;
