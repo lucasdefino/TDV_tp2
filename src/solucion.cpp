@@ -20,11 +20,11 @@ void Solucion::assign(int deposito, int vendedor) {
     this->_asigancion_vendedores[vendedor] = deposito;
 }
 
-bool Solucion::isVendedorAssigned(int vendedor) const {
+bool Solucion::isVendedorAsignado(int vendedor) const {
     return this->_asigancion_vendedores[vendedor] != -1;
 }
 
-int Solucion::getAssignedDeposito(int vendedor) const {
+int Solucion::getDepositoAsignado(int vendedor) const {
     return this->_asigancion_vendedores[vendedor];
 }
 

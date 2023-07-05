@@ -13,9 +13,9 @@ class Solucion
         int getN() const;
         int getM() const;
         void assign(int deposito, int vendedor);
-        bool isVendedorAssigned(int vendedor) const;
-        int getAssignedVendedor(int deposito) const;
-        int getAssignedDeposito(int vendedor) const;
+        bool isVendedorAsignado(int vendedor) const;
+        int getVendedoresAsignado(int deposito) const;
+        int getDepositoAsignado(int vendedor) const;
 
         //friend std::ostream& operator<<(std::ostream& os, const Solucion& solution);
 
