@@ -19,7 +19,6 @@ ReadInstance::ReadInstance(std::string filename) {
     this->capacidades={};
     this->demandas={};
     this->ReadFromFile(filename);
-
 }
 
 void ReadInstance::ReadFromFile(std::string filename) {
