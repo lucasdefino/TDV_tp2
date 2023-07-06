@@ -51,8 +51,8 @@ void Heuristica0::swap() {
 
         int j = i+1;
         while (j<this->_solucion.getN()){
-            int capres_dep_i = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(i)) + this->_solucion.getDemanda(i) - this->_solucion.getDemanda(j);
-            int capres_dep_j = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(j)) + this->_solucion.getDemanda(j) - this->_solucion.getDemanda(i);
+            int capres_dep_i = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(i)) + this->_instance.demandas[i] - this->_instance.demandas[j];
+            int capres_dep_j = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(j)) + this->_instance.demandas[j] - this->_instance.demandas[i];
             if( capres_dep_i >=0 && capres_dep_j >=0 ){
                 Solucion aux = this->_solucion;
                 int dep_i = aux.getDepositoAsignado(i);

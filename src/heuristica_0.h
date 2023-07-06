@@ -19,10 +19,12 @@ class Heuristica0
         double getObjectiveValue() const;
         Solucion getSolucion() const;
         std::vector<int> getCapRes() const;
+
+        Solucion _solucion;
 	
 	private:
         ReadInstance _instance;
-        Solucion _solucion;
+        
         double _objective_value;
         std::vector<int> _capacidades_restantes;
 

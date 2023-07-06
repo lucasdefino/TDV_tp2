@@ -43,7 +43,7 @@ void ReadInstance::ReadFromFile(std::string filename) {
         for (int k = 0; costos[i].size() < n; k++){
             std::string line;
             myfile >> line;
-            costos[i].push_back(std::stoi(line));
+            costos[i].push_back(std::stof(line));
         }
     }
 

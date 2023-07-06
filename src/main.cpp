@@ -15,18 +15,9 @@ int main(int argc, char** argv) {
 
     heuristica.solve();
 
-    // Solucion solucion = heuristica.getSolucion();
+    //heuristica.swap();
 
-    // int i = 0;
-    // while (i < solucion.getN())
-    // {
-    //     std::cout << solucion.getDepositoAsignado(i) << " ";
-    //         i++;
-    // }
-
-    // std::cout << std::endl;
-
-    cout << heuristica.getObjectiveValue() << endl;
+    //cout << heuristica.getObjectiveValue() << endl;
 
     //Solucion solucion = heuristica.getSolucion();
 
