@@ -13,7 +13,8 @@ class Solucion
 
         int getN() const;
         int getM() const;
-        void assign(int deposito, int vendedor);
+        void assign(int deposito, int vendedor, ReadInstance &instance);
+        void unassign(int vendedor, int deposito, ReadInstance &instance);
         bool isVendedorAsignado(int vendedor) const;
         int getVendedoresAsignado() const;
         int getDepositoAsignado(int vendedor) const;

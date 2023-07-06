@@ -34,7 +34,7 @@ void Heuristica2::solve() {
         }
         
         if (vendedor_mas_barato != -1) {
-            this->_solucion.assign(i,vendedor_mas_barato);
+            this->_solucion.assign(i,vendedor_mas_barato,_instance);
             _objective_value += this->_instance.costos[i][vendedor_mas_barato];
         }
         

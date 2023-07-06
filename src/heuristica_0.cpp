@@ -31,7 +31,7 @@ void Heuristica0::solve() {
         }
 
         if (deposito_mas_barato != -1) {
-            this->_solucion.assign(deposito_mas_barato,j);
+            this->_solucion.assign(deposito_mas_barato,j,_instance);
             _objective_value += this->_instance.costos[deposito_mas_barato][j];
         }
 
@@ -40,6 +40,38 @@ void Heuristica0::solve() {
 
     //_objective_value += this->_solucion.getVendedoresAsignado()*this->_instance.demanda_maxima*3;
 
+}
+
+void Heuristica0::swap() {
+    
+    Solucion best_sol = this->_solucion;
+
+    int i = 0;
+    while(i < this->_solucion.getN()){
+
+        int j = i+1;
+        while (j<this->_solucion.getN()){
+            int capres_dep_i = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(i)) + this->_solucion.getDemanda(i) - this->_solucion.getDemanda(j);
+            int capres_dep_j = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(j)) + this->_solucion.getDemanda(j) - this->_solucion.getDemanda(i);
+            if( capres_dep_i >=0 && capres_dep_j >=0 ){
+                Solucion aux = this->_solucion;
+                int dep_i = aux.getDepositoAsignado(i);
+                aux.unassign(dep_i,i,_instance);
+                int dep_j = aux.getDepositoAsignado(j);
+                aux.unassign(dep_j,j,_instance);
+                aux.assign(dep_i,j,_instance);
+                aux.assign(dep_j,i,_instance);
+                if (aux.getObjectiveValue() < best_sol.getObjectiveValue()){
+                    best_sol = aux;
+                }
+            }
+            j++;
+
+        }
+
+        i++;
+    }
+    this->_solucion = best_sol;
 }
 
 

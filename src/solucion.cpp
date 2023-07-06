@@ -20,10 +20,18 @@ int Solucion::getM() const {
     return this->_m;
 }
 
-void Solucion::assign(int deposito, int vendedor) {
+void Solucion::assign(int deposito, int vendedor, ReadInstance &instance) {
     this->_asigancion_vendedores[vendedor] = deposito;
     this->_vendedores_asignados++;
     this->_capacidades_restantes[deposito] -= this->_demandas[vendedor];
+    this->_objective_value += instance.costos[deposito][vendedor];
+}
+
+void Solucion::unassign(int vendedor, int deposito, ReadInstance &instance) {
+    this->_asigancion_vendedores[vendedor] = -1;
+    this->_vendedores_asignados++;
+    this->_capacidades_restantes[deposito] += this->_demandas[vendedor];
+    this->_objective_value -= instance.costos[deposito][vendedor];
 }
 
 bool Solucion::isVendedorAsignado(int vendedor) const {

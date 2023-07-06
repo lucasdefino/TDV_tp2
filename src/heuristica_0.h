@@ -15,6 +15,7 @@ class Heuristica0
         Heuristica0(ReadInstance &instance);
 
         void solve();
+        void swap();
         double getObjectiveValue() const;
         Solucion getSolucion() const;
         std::vector<int> getCapRes() const;

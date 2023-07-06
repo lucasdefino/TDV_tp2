@@ -4,7 +4,6 @@
 #include "heuristica_0.h"
 #include "heuristica_1.h"
 #include "heuristica_2.h"
-#include "busqueda_local.h"
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -29,11 +28,7 @@ int main(int argc, char** argv) {
 
     cout << heuristica.getObjectiveValue() << endl;
 
-    Solucion solucion = heuristica.getSolucion();
-
-    BusquedaLocal BL(solucion);
-
-    cout << BL.getObjectiveValue() << endl;
+    //Solucion solucion = heuristica.getSolucion();
 
     return 0;
 }
