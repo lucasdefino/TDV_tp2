@@ -18,7 +18,6 @@ class Heuristica0
         void swap();
         double getObjectiveValue() const;
         Solucion getSolucion() const;
-        std::vector<int> getCapRes() const;
 
         Solucion _solucion;
 	

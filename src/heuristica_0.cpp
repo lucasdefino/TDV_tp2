@@ -34,7 +34,6 @@ void Heuristica0::solve() {
             this->_solucion.assign(deposito_mas_barato,j,_instance);
             _objective_value += this->_instance.costos[deposito_mas_barato][j];
         }
-
         j++;
     }
 
@@ -57,9 +56,7 @@ void Heuristica0::swap() {
             if( capres_dep_i >=0 && capres_dep_j >=0 ){              
                 Solucion aux = this->_solucion; 
                 int dep_i = aux.getDepositoAsignado(i);
-                //aux.unassign(dep_i,i,_instance);
                 int dep_j = aux.getDepositoAsignado(j);
-                //aux.unassign(dep_j,j,_instance);
                 aux.assign(dep_i,j,_instance);
                 aux.assign(dep_j,i,_instance);
                 if (aux.getObjectiveValue() < best_sol.getObjectiveValue()){
@@ -82,8 +79,4 @@ double Heuristica0::getObjectiveValue() const {
 
 Solucion Heuristica0::getSolucion() const {
     return this->_solucion;
-}
-
-vector<int> Heuristica0::getCapRes() const {
-    return this->_capacidades_restantes;
 }

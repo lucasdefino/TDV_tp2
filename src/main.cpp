@@ -11,15 +11,15 @@ int main(int argc, char** argv) {
 
     ReadInstance instance(filename);
 
-    Heuristica2 heuristica(instance);
+    Heuristica0 heuristica(instance);
 
     heuristica.solve();
 
     cout << heuristica.getObjectiveValue() << endl;
 
-    heuristica.swap();
+    //heuristica.swap();
 
-    cout << heuristica.getObjectiveValue() << endl;
+    //cout << heuristica.getObjectiveValue() << endl;
 
     //Solucion solucion = heuristica.getSolucion();
 

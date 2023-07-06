@@ -36,14 +36,14 @@ void ReadInstance::ReadFromFile(std::string filename) {
     this->n = std::stoi(line);
     
     // Leo los siguientes m grupos para levantar los costos a cada cliente
-    this->costos = std::vector<std::vector<int>>(m);
+    this->costos = std::vector<std::vector<double>>(m);
 
 
     for (int i = 0; i < m; i++) {
         for (int k = 0; costos[i].size() < n; k++){
             std::string line;
             myfile >> line;
-            costos[i].push_back(std::stof(line));
+            costos[i].push_back(std::stod(line));
         }
     }
 
