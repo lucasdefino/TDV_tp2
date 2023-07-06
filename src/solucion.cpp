@@ -21,16 +21,21 @@ int Solucion::getM() const {
 }
 
 void Solucion::assign(int deposito, int vendedor, ReadInstance &instance) {
+    if(this->_asigancion_vendedores[vendedor] != -1){
+        this->_vendedores_asignados--;
+        this->_capacidades_restantes[this->_asigancion_vendedores[vendedor]] += instance.demandas[vendedor];
+        this->_objective_value -= instance.costos[this->_asigancion_vendedores[vendedor]][vendedor];
+    }
+    
     this->_asigancion_vendedores[vendedor] = deposito;
     this->_vendedores_asignados++;
     this->_capacidades_restantes[deposito] -= instance.demandas[vendedor];
     this->_objective_value += instance.costos[deposito][vendedor];
 }
 
-void Solucion::unassign(int vendedor, int deposito, ReadInstance &instance) {
-    std::cout << "hola" << std::endl; 
+void Solucion::unassign(int vendedor, int deposito, ReadInstance &instance) { 
     this->_asigancion_vendedores[vendedor] = -1;
-    this->_vendedores_asignados--;
+    
     this->_capacidades_restantes[deposito] += instance.demandas[vendedor];
     this->_objective_value -= instance.costos[deposito][vendedor];
 }

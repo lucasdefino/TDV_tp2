@@ -15,9 +15,11 @@ int main(int argc, char** argv) {
 
     heuristica.solve();
 
-    //heuristica.swap();
+    cout << heuristica.getObjectiveValue() << endl;
 
-    //cout << heuristica.getObjectiveValue() << endl;
+    heuristica.swap();
+
+    cout << heuristica.getObjectiveValue() << endl;
 
     //Solucion solucion = heuristica.getSolucion();
 
