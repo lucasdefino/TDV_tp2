@@ -16,6 +16,7 @@ class Heuristica0
 
         void solve();
         void swap();
+        void relocate();
         double getObjectiveValue() const;
         Solucion getSolucion() const;
 

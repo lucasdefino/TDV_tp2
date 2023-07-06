@@ -7,21 +7,19 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    std::string filename = "instances/real/real_instance";
+    std::string filename = "instances/gap/gap_a/a20200";
 
     ReadInstance instance(filename);
 
-    Heuristica2 heuristica(instance);
+    Heuristica0 heuristica(instance);
 
     heuristica.solve();
 
     cout << heuristica.getObjectiveValue() << endl;
 
-    heuristica.swap();
+    heuristica.relocate();
 
     cout << heuristica.getObjectiveValue() << endl;
-
-    //Solucion solucion = heuristica.getSolucion();
 
     return 0;
 }
