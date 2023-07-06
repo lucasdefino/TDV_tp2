@@ -17,6 +17,7 @@ class Heuristica2
         void solve();
         double getObjectiveValue() const;
         Solucion getSolucion() const;
+        void swap();
 
 	
 	private:

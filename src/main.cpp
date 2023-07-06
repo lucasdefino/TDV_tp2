@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
 
     ReadInstance instance(filename);
 
-    Heuristica0 heuristica(instance);
+    Heuristica2 heuristica(instance);
 
     heuristica.solve();
 
