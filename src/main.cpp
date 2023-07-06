@@ -1,9 +1,9 @@
 #include <string>
 #include <iostream>
 #include "read_instance.h"
+#include "heuristica_0.h"
 #include "heuristica_1.h"
 #include "heuristica_2.h"
-#include "heuristica_3.h"
 #include "busqueda_local.h"
 using namespace std;
 

@@ -17,15 +17,12 @@ class Heuristica2
         void solve();
         double getObjectiveValue() const;
         Solucion getSolucion() const;
-        std::vector<int> getCapRes() const;
 
 	
 	private:
         ReadInstance _instance;
         Solucion _solucion;
         double _objective_value;
-        std::vector<int> _capacidades_restantes;
-
 
 };
 

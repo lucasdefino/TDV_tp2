@@ -8,11 +8,9 @@ Heuristica2::Heuristica2(ReadInstance &instance) {
     this->_instance = instance;
     this->_solucion = Solucion(instance);
     this->_objective_value = 0;
-    this->_capacidades_restantes;
 }
-//POV CAPITANES DE EQUIPO
+//POV DEPOSITOS
 void Heuristica2::solve() {
-    this->_capacidades_restantes = this->_instance.capacidades;
     int demanda_maxima = 0;
     int i = 0;
 
@@ -25,12 +23,12 @@ void Heuristica2::solve() {
             vendedor_mas_barato = -1;
 
             while (j < this->_instance.n){
-                if (this->_solucion.isVendedorAsignado(j)==0){
+                if (_solucion.isVendedorAsignado(j)==false){
                     double costo_actual = this->_instance.costos[i][j];
                     
                     if (costo_actual < menor_costo){
 
-                        if(this->_capacidades_restantes[i]-this->_instance.demandas[j] >= 0){
+                        if(this->_solucion.getCapacidadRestante(i)-this->_instance.demandas[j] >= 0){
                             vendedor_mas_barato=j;
                             menor_costo=costo_actual;
                         }
@@ -43,21 +41,14 @@ void Heuristica2::solve() {
                 demanda_maxima = this->_instance.demandas[vendedor_mas_barato];
             }
             if (vendedor_mas_barato != -1) {
-                this->_solucion.assign(vendedor_mas_barato, i);
-                this->_capacidades_restantes[i] -= this->_instance.demandas[vendedor_mas_barato];
+                this->_solucion.assign(i,vendedor_mas_barato);
                 _objective_value += this->_instance.costos[i][vendedor_mas_barato];
             }
         }
         i++;
     }
-
-    int vendedores_sin_asignar = 0; 
-    for (int i = 0; i < this->_instance.n; i++){
-        if (this->_solucion.isVendedorAsignado(i) != 0){
-            vendedores_sin_asignar++;
-        }
-    }
-    _objective_value += vendedores_sin_asignar*demanda_maxima*3;
+    
+    _objective_value += this->_solucion.getVendedoresAsignado()*demanda_maxima*3;
 
 }
 
@@ -68,9 +59,3 @@ double Heuristica2::getObjectiveValue() const {
 Solucion Heuristica2::getSolucion() const {
     return this->_solucion;
 }
-
-vector<int> Heuristica2::getCapRes() const {
-    return this->_capacidades_restantes;
-}
-
-
