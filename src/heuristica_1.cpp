@@ -11,11 +11,10 @@ Heuristica1::Heuristica1(ReadInstance &instance) {
 }
 //POV DEPOSITOS
 void Heuristica1::solve() {
-    int demanda_maxima = 0;
     int i = 0;
 
     while(i < this->_instance.m){
-        int vendedor_mas_barato = -2;
+        int vendedor_mas_barato = 0;
 
         while (vendedor_mas_barato != -1){
             int j = 0;
@@ -37,9 +36,6 @@ void Heuristica1::solve() {
                 j++;
             }
 
-            if (demanda_maxima < this->_instance.demandas[vendedor_mas_barato]){
-                demanda_maxima = this->_instance.demandas[vendedor_mas_barato];
-            }
             if (vendedor_mas_barato != -1) {
                 this->_solucion.assign(i,vendedor_mas_barato);
                 _objective_value += this->_instance.costos[i][vendedor_mas_barato];
@@ -48,7 +44,7 @@ void Heuristica1::solve() {
         i++;
     }
     
-    _objective_value += this->_solucion.getVendedoresAsignado()*demanda_maxima*3;
+    //_objective_value += this->_solucion.getVendedoresAsignado()*this->_instance.demanda_maxima*3;
 
 }
 

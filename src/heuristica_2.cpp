@@ -9,47 +9,42 @@ Heuristica2::Heuristica2(ReadInstance &instance) {
     this->_solucion = Solucion(instance);
     this->_objective_value = 0;
 }
-//POV DEPOSITOS
+//POV CAPITANES DE EQUIPO
 void Heuristica2::solve() {
-    int demanda_maxima = 0;
     int i = 0;
+    int j = 0;
 
-    while(i < this->_instance.m){
-        int vendedor_mas_barato = -2;
+    while(j < this->_instance.n){
+        int vendedor_mas_barato = 0;
+        int k = 0;
+        double menor_costo = 999;
 
-        while (vendedor_mas_barato != -1){
-            int j = 0;
-            double menor_costo = 999;
-            vendedor_mas_barato = -1;
+        while (k < this->_instance.n){
+            if (_solucion.isVendedorAsignado(k)==false){
+                double costo_actual = this->_instance.costos[i][k];
 
-            while (j < this->_instance.n){
-                if (_solucion.isVendedorAsignado(j)==false){
-                    double costo_actual = this->_instance.costos[i][j];
-                    
-                    if (costo_actual < menor_costo){
-
-                        if(this->_solucion.getCapacidadRestante(i)-this->_instance.demandas[j] >= 0){
-                            vendedor_mas_barato=j;
-                            menor_costo=costo_actual;
-                        }
+                if (costo_actual < menor_costo){
+                    if(this->_solucion.getCapacidadRestante(i)-this->_instance.demandas[k] >= 0){
+                        vendedor_mas_barato=k;
+                        menor_costo=costo_actual;
                     }
                 }
-                j++;
             }
-
-            if (demanda_maxima < this->_instance.demandas[vendedor_mas_barato]){
-                demanda_maxima = this->_instance.demandas[vendedor_mas_barato];
-            }
-            if (vendedor_mas_barato != -1) {
-                this->_solucion.assign(i,vendedor_mas_barato);
-                _objective_value += this->_instance.costos[i][vendedor_mas_barato];
-            }
+            k++;
         }
+        
+        if (vendedor_mas_barato != -1) {
+            this->_solucion.assign(i,vendedor_mas_barato);
+            _objective_value += this->_instance.costos[i][vendedor_mas_barato];
+        }
+        
         i++;
+        if (i == this->_instance.m) {
+            i = 0;
+        }
+        j++;
     }
-    
-    _objective_value += this->_solucion.getVendedoresAsignado()*demanda_maxima*3;
-
+    //_objective_value += this->_solucion.getVendedoresAsignado()*this->_instance.demanda_maxima*3;
 }
 
 double Heuristica2::getObjectiveValue() const {

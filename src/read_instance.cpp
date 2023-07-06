@@ -18,6 +18,7 @@ ReadInstance::ReadInstance(std::string filename) {
     this->costos={};
     this->capacidades={};
     this->demandas={};
+    //this->demanda_maxima=0;
     this->ReadFromFile(filename);
 }
 
@@ -51,7 +52,8 @@ void ReadInstance::ReadFromFile(std::string filename) {
     for (int i = 0; this->demandas.size() < n; i++){
             std::string line;
             myfile >> line;
-            this->demandas.push_back(std::stoi(line)); 
+            this->demandas.push_back(std::stoi(line));
+            //if(this->demandas[i] > demanda_maxima){this->demanda_maxima=this->demandas[i];}
     }
     // Avanzo los proximos m-1 grupos para llevar la lectura del archivo a la proxima
     // "seccion" donde estan las capacidades

@@ -10,9 +10,7 @@ Heuristica0::Heuristica0(ReadInstance &instance) {
     this->_objective_value = 0;
 }
 //POV VENDEDORES
-void Heuristica0::solve() {
-    int demanda_maxima = 0;
-    
+void Heuristica0::solve() {    
     int j = 0;
     while(j < this->_instance.n){
         int i = 0;
@@ -32,11 +30,6 @@ void Heuristica0::solve() {
             i++;
         }
 
-
-        if (demanda_maxima < this->_instance.demandas[j]){
-            demanda_maxima = this->_instance.demandas[j];
-        }
-
         if (deposito_mas_barato != -1) {
             this->_solucion.assign(deposito_mas_barato,j);
             _objective_value += this->_instance.costos[deposito_mas_barato][j];
@@ -45,7 +38,7 @@ void Heuristica0::solve() {
         j++;
     }
 
-    _objective_value += this->_solucion.getVendedoresAsignado()*demanda_maxima*3;
+    //_objective_value += this->_solucion.getVendedoresAsignado()*this->_instance.demanda_maxima*3;
 
 }
 

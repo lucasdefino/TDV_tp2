@@ -8,24 +8,26 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    std::string filename = "instances/gap/gap_a/a05100";
+    std::string filename = "instances/gap/gap_a/a10200";
 
     ReadInstance instance(filename);
 
-    Heuristica1 heuristica(instance);
+    Heuristica2 heuristica(instance);
 
     heuristica.solve();
 
-    Solucion solucion = heuristica.getSolucion();
+    // Solucion solucion = heuristica.getSolucion();
 
-    int i = 0;
-    while (i < solucion.getN())
-    {
-        std::cout << solucion.getDepositoAsignado(i) << " ";
-            i++;
-    }
+    // int i = 0;
+    // while (i < solucion.getN())
+    // {
+    //     std::cout << solucion.getDepositoAsignado(i) << " ";
+    //         i++;
+    // }
 
-    std::cout << std::endl;
+    // std::cout << std::endl;
+
+    cout << heuristica.getObjectiveValue() << endl;
 
     return 0;
 }
