@@ -1,5 +1,5 @@
-#ifndef BUSQUEDA_LOCAL_2_H
-#define BUSQUEDA_LOCAL_2_H
+#ifndef BUSQUEDA_LOCAL_H
+#define BUSQUEDA_LOCAL_H
 
 #include <cstdint>
 #include <vector>
@@ -7,26 +7,23 @@
 #include "read_instance.h"
 #include "heuristica_2.h"
 #include "heuristica_1.h"
+#include "heuristica_0.h"
+#include "solucion.h"
 
-class BusquedaLocal2
+class BusquedaLocal
 {
     public:
-    BusquedaLocal2();
-    BusquedaLocal2(ReadInstance &instance);
+    BusquedaLocal();
+    BusquedaLocal(Solucion &solucion);
 
-
-    void Swap(double objective_value, std::vector<int> solution, std::vector<int> capres);
+    void Swap();
     double getObjectiveValue() const;
-    std::vector<int> getSolution() const;
-    std::vector<int> getCapRes() const;
+    Solucion getSolucion() const;
 
 	private:
-    // Instance, problem and results attributes
-    ReadInstance _instance;
-    //TaxiAssignmentSolution _solution;
+    Solucion _solucion;
     double _objective_value;
-    std::vector<int> _solution;
-    std::vector<int> _capacidades_restantes;
+
 
 };
 

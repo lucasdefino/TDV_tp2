@@ -8,11 +8,11 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    std::string filename = "instances/gap/gap_a/a10200";
+    std::string filename = "instances/gap/gap_a/a05100";
 
     ReadInstance instance(filename);
 
-    Heuristica2 heuristica(instance);
+    Heuristica0 heuristica(instance);
 
     heuristica.solve();
 
@@ -28,6 +28,12 @@ int main(int argc, char** argv) {
     // std::cout << std::endl;
 
     cout << heuristica.getObjectiveValue() << endl;
+
+    Solucion solucion = heuristica.getSolucion();
+
+    BusquedaLocal BL(solucion);
+
+    cout << BL.getObjectiveValue() << endl;
 
     return 0;
 }

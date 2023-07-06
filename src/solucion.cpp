@@ -46,6 +46,10 @@ int Solucion::getVendedoresAsignado() const {
     return this->_vendedores_asignados;
 }
 
+int Solucion::getDemanda(int vendedor) const {
+    return this->_demandas[vendedor];
+}
+
 // std::ostream& operator<<(std::ostream& os, const TaxiAssignmentSolution& solution) {
 //     os << "taxis: ";
 //     for (int i = 0; i < solution.getN(); i++)

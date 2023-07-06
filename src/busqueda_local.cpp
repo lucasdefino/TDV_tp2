@@ -2,60 +2,49 @@
 #include <iostream>
 using namespace std;
 
-BusquedaLocal2::BusquedaLocal2() {}
+BusquedaLocal::BusquedaLocal() {}
 
-BusquedaLocal2::BusquedaLocal2(ReadInstance &instance) {
-    this->_instance = instance;
-    this->_objective_value = 0;
-    this->_capacidades_restantes;
-    this->_solution;
+BusquedaLocal::BusquedaLocal(Solucion &solucion) {
+    this->_solucion = solucion;
+    this->_objective_value = solucion.getObjectiveValue();
 }
 
-void BusquedaLocal2::Swap(double objective_value,vector<int> solution, vector<int> capres) {
-    this->_solution = solution;
-    this->_capacidades_restantes = capres;
-    this->_objective_value = objective_value;
+void BusquedaLocal::Swap() {
+    
+    Solucion best_sol = this->_solucion;
 
     int i = 0;
-    while(i<this->_instance.n){
-        double best_obj_val = this->_objective_value;
-        vector<int> best_sol = this->_solution;
-        vector<int> best_capres = this->_capacidades_restantes;
+    while(i < this->_solucion.getN()){
 
         int j = i+1;
-        while (j<this->_instance.n){
-            int capres_dep_i = this->_capacidades_restantes[this->_solution[i]] + this->_instance.demandas[i] - this->_instance.demandas[j];
-            int capres_dep_j = this->_capacidades_restantes[this->_solution[j]] + this->_instance.demandas[j] - this->_instance.demandas[i];
-            if( capres_dep_i >=0 && capres_dep_j >=0 ){
-                int obj_val_aux = this->_objective_value + this->_instance.costos[this->_solution[i]][j] + this->_instance.costos[this->_solution[j]][i] - this->_instance.costos[this->_solution[i]][i] - this->_instance.costos[this->_solution[j]][j];
-                if (obj_val_aux < best_obj_val){
-                    best_obj_val = obj_val_aux;
-                    int deposito_aux = best_sol[i];
-                    best_sol[i] = best_sol[j];
-                    best_sol[j] = deposito_aux;
-                    best_capres[best_sol[i]] = capres_dep_i;
-                    best_capres[best_sol[j]] = capres_dep_j;
-                }
-            }
-            j++;
-        }
-        this->_objective_value = best_obj_val;
-        this->_solution[i] = best_sol[i];
-        this->_solution[j] = best_sol[j];
-        this->_capacidades_restantes[this->_solution[i]] = best_capres[best_sol[i]];
-        this->_capacidades_restantes[this->_solution[j]] = best_capres[best_sol[j]];
+        // while (j<this->_solucion.getN()){
+        //     int capres_dep_i = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(i)) + this->_solucion.getDemanda(i) - this->_solucion.getDemanda(j);
+        //     int capres_dep_j = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(j)) + this->_solucion.getDemanda(j) - this->_solucion.getDemanda(i);
+        //     if( capres_dep_i >=0 && capres_dep_j >=0 ){
+        //         Solucion aux = this->_solucion;
+        //         int dep_i = aux.getDepositoAsignado(i);
+        //         aux.unassign(i);
+        //         int dep_j = aux.getDepositoAsignado(j);
+        //         aux.unassign(j);
+        //         aux.assign(dep_i,j);
+        //         aux.assign(dep_j,i);
+        //         if (aux.getObjectiveValue() < best_sol.getObjectiveValue()){
+        //             best_sol = aux;
+        //         }
+        //     }
+        //     j++;
+
+        // }
+
         i++;
     }
+    this->_solucion = best_sol;
 }
 
-double BusquedaLocal2::getObjectiveValue() const {
-    return this->_objective_value;
+double BusquedaLocal::getObjectiveValue() const {
+    return this->_solucion.getObjectiveValue();
 }
 
-vector<int> BusquedaLocal2::getSolution() const {
-    return this->_solution;
-}
-
-vector<int> BusquedaLocal2::getCapRes() const {
-    return this->_capacidades_restantes;
+Solucion BusquedaLocal::getSolucion() const {
+    return this->_solucion;
 }

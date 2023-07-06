@@ -19,6 +19,7 @@ class Solucion
         int getDepositoAsignado(int vendedor) const;
         int getCapacidadRestante(int deposito) const;
         int getObjectiveValue() const;
+        int getDemanda(int vendedor) const;
 
         //friend std::ostream& operator<<(std::ostream& os, const Solucion& solution);
 	
