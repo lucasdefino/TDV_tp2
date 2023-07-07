@@ -12,6 +12,7 @@ int main(int argc, char** argv) {
     //vector<string> filenames = {"instances/gap/gap_a/a05100","instances/gap/gap_a/a05200","instances/gap/gap_a/a10100","instances/gap/gap_a/a10200","instances/gap/gap_a/a20100","instances/gap/gap_a/a20200"};
 
     ReadInstance instance("instances/real/real_instance");
+    //ReadInstance instance("instances/gap/gap_e/e20100");
 
     Heuristica2 heuristica(instance);
 
@@ -19,7 +20,11 @@ int main(int argc, char** argv) {
 
     cout << heuristica.getObjectiveValue() << endl;
 
-    heuristica.swap();
+    cout << heuristica.getSolucion().getVendedoresAsignados() << endl;
+
+    heuristica.relocate();
+
+    cout << heuristica.getSolucion().getVendedoresAsignados() << endl;
 
     cout << heuristica.getObjectiveValue() << endl;
 

@@ -75,18 +75,18 @@ void Heuristica0::swap() {
 void Heuristica0::relocate() {
     
     Solucion best_sol = this->_solucion;
-
     int j = 0;
     while(j < this->_instance.n){
         int i = 0;
         while (i < this->_instance.m){
             int capres = this->_solucion.getCapacidadRestante(i) - this->_instance.demandas[j];
-            
             if(capres >=0){              
-                Solucion aux = this->_solucion; 
+                Solucion aux = this->_solucion;
+                if (this->_solucion.isVendedorAsignado(i)==false){
+                    aux.objective_value -= this->_instance.demanda_maxima*3; 
+                } 
                 aux.assign(i,j,_instance);
                 if (aux.objective_value < best_sol.objective_value){
-                    cout << "hola" << endl;
                     best_sol = aux;
                 }
             }
@@ -94,6 +94,7 @@ void Heuristica0::relocate() {
         }
         j++;
     }
+    
     this->_solucion = best_sol;
 }
 
