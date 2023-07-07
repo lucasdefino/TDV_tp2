@@ -9,6 +9,7 @@ MetaHeuristica::MetaHeuristica(ReadInstance &instance) {
     this->_solucion = Solucion(instance);
 }
 
+/////////// Heurística 0 - Los vendedores eligen ///////////
 void MetaHeuristica::heuristica_0() {    
     int j = 0;
     while(j < this->_instance.n){
@@ -40,6 +41,7 @@ void MetaHeuristica::heuristica_0() {
 
 }
 
+/////////// Heurística 1 - Los depósitos eligen ///////////
 void MetaHeuristica::heuristica_1() {
     int i = 0;
 
@@ -77,6 +79,7 @@ void MetaHeuristica::heuristica_1() {
 
 }
 
+/////////// Heurística 2 - Capitanes de equipo ///////////
 void MetaHeuristica::heuristica_2() {
     int i = 0;
     int j = 0;
@@ -114,6 +117,7 @@ void MetaHeuristica::heuristica_2() {
     this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.demanda_maxima*3;
 }
 
+/////////// Operador de Búsqueda Local 1 - Swap ///////////
 void MetaHeuristica::swap() {
     Solucion best_sol = this->_solucion;
 
@@ -145,6 +149,7 @@ void MetaHeuristica::swap() {
     this->_solucion = best_sol;
 }
 
+/////////// Operador de Búsqueda Local 2 - Relocate ///////////
 void MetaHeuristica::relocate() {
     int aux_i = 0;
     int aux_j = 0;
@@ -157,17 +162,10 @@ void MetaHeuristica::relocate() {
             int capres = this->_solucion.capacidades_restantes[i] - this->_instance.demandas[j];
             if(capres >=0){              
                 Solucion aux = this->_solucion;
-                //if (i==4 && j==8){cout << aux.objective_value << endl;}
                 aux.assign(i,j,_instance);
-
-                //if (i==4 && j==8){cout << (this->_solucion.isVendedorAsignado(j)==true) << endl;}
-                
                 if (this->_solucion.isVendedorAsignado(j)==0){
                     aux.objective_value -= this->_instance.demanda_maxima*3; 
                 }
-
-                //if (i==4 && j==8){cout << aux.objective_value << endl;}
-
                 if (aux.objective_value < best_sol.objective_value){
                     best_sol = aux;
                     aux_i = i;
@@ -178,10 +176,10 @@ void MetaHeuristica::relocate() {
         }
         j++;
     }
-    //cout << aux_i << "  " << aux_j << endl;
     this->_solucion = best_sol;
 }
 
+/////////// Metaheuristica Variable Neighborhood Descent ///////////
 void MetaHeuristica::vnd() {
     int k = 0;
     int contador = 0;

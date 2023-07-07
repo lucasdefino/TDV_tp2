@@ -27,7 +27,7 @@ void ReadInstance::ReadFromFile(std::string filename) {
     std::ifstream myfile; 
     myfile.open(filename);
     
-    // Leo la primera linea para juntar los tama;os de deposito y clientes
+    // Leo la primera linea para juntar los tamaños de deposito y clientes
     char delim = ' ';
     std::string line;
     myfile >> line;
@@ -38,7 +38,6 @@ void ReadInstance::ReadFromFile(std::string filename) {
     // Leo los siguientes m grupos para levantar los costos a cada cliente
     this->costos = std::vector<std::vector<double>>(m);
 
-
     for (int i = 0; i < m; i++) {
         for (int k = 0; costos[i].size() < n; k++){
             std::string line;
@@ -47,8 +46,8 @@ void ReadInstance::ReadFromFile(std::string filename) {
         }
     }
 
-    // Leo los siguientes n valores para levantar las demandas del primer deposito
-    // y como son todos iguales basta con guardarlo en una lista (GAP simplificado)
+    // Leo los siguientes n valores para levantar las demandas del primer deposito y como
+    // son todos iguales tanto para GAP como para la real basta con guardarlo en una lista
     for (int i = 0; this->demandas.size() < n; i++){
             std::string line;
             myfile >> line;

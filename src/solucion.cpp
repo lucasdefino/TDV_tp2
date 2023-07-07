@@ -21,6 +21,7 @@ int Solucion::getM() const {
 }
 
 void Solucion::assign(int deposito, int vendedor, ReadInstance &instance) {
+    //si el vendedor estaba asignado a otro deposito lo desasigno primero
     if(this->_asigancion_vendedores[vendedor] != -1){
         this->_vendedores_asignados--;
         this->capacidades_restantes[this->_asigancion_vendedores[vendedor]] += instance.demandas[vendedor];
@@ -49,20 +50,4 @@ int Solucion::getDemanda(int vendedor) const {
     return this->_demandas[vendedor];
 }
 
-// std::ostream& operator<<(std::ostream& os, const TaxiAssignmentSolution& solution) {
-//     os << "taxis: ";
-//     for (int i = 0; i < solution.getN(); i++)
-//         os << solution.getAssignedPax(i) << " ";
-//     os << std::endl;
-//     os << "paxs: ";
-//     for (int i = 0; i < solution.getN(); i++)
-//         os << solution.getAssignedTaxi(i) << " ";
-//     os << std::endl;
-//     os << "taxi \t --> \t pax" << std::endl;
-//     for (int i = 0; i < solution.getN(); i++) {
-//         os << i << " \t --> \t" << solution.getAssignedPax(i) << std::endl;
-//     }
-
-//     return os;
-// }
 
