@@ -185,7 +185,7 @@ void MetaHeuristica::relocate() {
 void MetaHeuristica::vnd() {
     int k = 0;
     int contador = 0;
-    while(k<2 && contador<2000){
+    while(k<2){
         contador++;
         MetaHeuristica aux = *this;
         if(k==0){
