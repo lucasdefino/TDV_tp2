@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -std=c++17
 SRC = meta_heuristica.cpp read_instance.cpp solucion.cpp main.cpp
 OBJ = $(SRC:.cpp=.o)
-EXEC = gap_simulator
+EXEC = tp_2
 
 all: $(EXEC)
 
