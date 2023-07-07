@@ -2,9 +2,6 @@
 #include <vector>
 #include <iostream>
 #include "read_instance.h"
-#include "heuristica_0.h"
-#include "heuristica_1.h"
-#include "heuristica_2.h"
 #include "meta_heuristica.h"
 using namespace std;
 
@@ -38,7 +35,7 @@ int main(int argc, char** argv) {
 
         MetaHeuristica solucion(instance);
 
-        solucion.heuristica_2();
+        solucion.heuristica_0();
 
         cout << solucion.getObjectiveValue();
         
