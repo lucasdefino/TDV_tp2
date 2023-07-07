@@ -107,7 +107,3 @@ void Heuristica1::relocate() {
 double Heuristica1::getObjectiveValue() const {
     return this->_solucion.objective_value;
 }
-
-Solucion Heuristica1::getSolucion() const {
-    return this->_solucion;
-}

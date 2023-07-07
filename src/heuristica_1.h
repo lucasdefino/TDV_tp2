@@ -14,16 +14,16 @@ class Heuristica1
         Heuristica1();
         Heuristica1(ReadInstance &instance);
 
-        void solve();
         double getObjectiveValue() const;
-        Solucion getSolucion() const;
+
+        void solve();
         void swap();
         void relocate();
 
+        Solucion _solucion;
 	
 	private:
         ReadInstance _instance;
-        Solucion _solucion;
 
 };
 

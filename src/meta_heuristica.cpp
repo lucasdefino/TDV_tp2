@@ -1,15 +1,15 @@
-#include "heuristica_0.h"
+#include "meta_heuristica.h"
 #include <iostream>
 using namespace std;
 
-Heuristica0::Heuristica0() {}
+MetaHeuristica::MetaHeuristica() {}
 
-Heuristica0::Heuristica0(ReadInstance &instance) {
+MetaHeuristica::MetaHeuristica(ReadInstance &instance) {
     this->_instance = instance;
     this->_solucion = Solucion(instance);
 }
-//POV VENDEDORES
-void Heuristica0::solve() {    
+
+void MetaHeuristica::heuristica_0() {    
     int j = 0;
     while(j < this->_instance.n){
         int i = 0;
@@ -40,8 +40,81 @@ void Heuristica0::solve() {
 
 }
 
-void Heuristica0::swap() {
+void MetaHeuristica::heuristica_1() {
+    int i = 0;
+
+    while(i < this->_instance.m){
+        int vendedor_mas_barato = 0;
+
+        while (vendedor_mas_barato != -1){
+            int j = 0;
+            double menor_costo = 999;
+            vendedor_mas_barato = -1;
+
+            while (j < this->_instance.n){
+                if (_solucion.isVendedorAsignado(j)==false){
+                    double costo_actual = this->_instance.costos[i][j];
+                    
+                    if (costo_actual < menor_costo){
+
+                        if(this->_solucion.getCapacidadRestante(i)-this->_instance.demandas[j] >= 0){
+                            vendedor_mas_barato=j;
+                            menor_costo=costo_actual;
+                        }
+                    }
+                }
+                j++;
+            }
+
+            if (vendedor_mas_barato != -1) {
+                this->_solucion.assign(i,vendedor_mas_barato,_instance);
+            }
+        }
+        i++;
+    }
     
+    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.demanda_maxima*3;
+
+}
+
+void MetaHeuristica::heuristica_2() {
+    int i = 0;
+    int j = 0;
+
+    while(j < this->_instance.n){
+        int vendedor_mas_barato = -1;
+        int k = 0;
+        double menor_costo = 999;
+
+        while (k < this->_instance.n){
+            if (_solucion.isVendedorAsignado(k)==false){
+                double costo_actual = this->_instance.costos[i][k];
+
+                if (costo_actual < menor_costo){
+                    if(this->_solucion.getCapacidadRestante(i)-this->_instance.demandas[k] >= 0){
+                        vendedor_mas_barato=k;
+                        menor_costo=costo_actual;
+                    }
+                }
+            }
+            k++;
+        }
+        
+        if (vendedor_mas_barato != -1) {
+            this->_solucion.assign(i,vendedor_mas_barato,_instance);
+        }
+        
+        i++;
+        if (i == this->_instance.m) {
+            i = 0;
+        }
+        j++;
+    }
+
+    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.demanda_maxima*3;
+}
+
+void MetaHeuristica::swap() {
     Solucion best_sol = this->_solucion;
 
     int i = 0;
@@ -72,7 +145,7 @@ void Heuristica0::swap() {
     this->_solucion = best_sol;
 }
 
-void Heuristica0::relocate() {
+void MetaHeuristica::relocate() {
     
     Solucion best_sol = this->_solucion;
     int j = 0;
@@ -99,6 +172,6 @@ void Heuristica0::relocate() {
 }
 
 
-double Heuristica0::getObjectiveValue() const {
+double MetaHeuristica::getObjectiveValue() const {
     return this->_solucion.objective_value;
 }

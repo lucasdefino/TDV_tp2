@@ -1,5 +1,5 @@
-#ifndef HEURISTICA_0_H
-#define HEURISTICA_0_H
+#ifndef META_HEURISTICA_H
+#define META_HEURISTICA_H
 
 #include <cstdint>
 #include <vector>
@@ -8,15 +8,20 @@
 #include "solucion.h"
 
 
-class Heuristica0
+class MetaHeuristica
 {
 	public:
-        Heuristica0();
-        Heuristica0(ReadInstance &instance);
+        MetaHeuristica();
+        MetaHeuristica(ReadInstance &instance);
 
         double getObjectiveValue() const;
 
-        void solve();
+        void vnd();
+
+        void heuristica_0();
+        void heuristica_1();
+        void heuristica_2();
+
         void swap();
         void relocate();
 

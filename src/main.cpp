@@ -5,28 +5,29 @@
 #include "heuristica_0.h"
 #include "heuristica_1.h"
 #include "heuristica_2.h"
+#include "meta_heuristica.h"
 using namespace std;
 
 int main(int argc, char** argv) {
 
     //vector<string> filenames = {"instances/gap/gap_a/a05100","instances/gap/gap_a/a05200","instances/gap/gap_a/a10100","instances/gap/gap_a/a10200","instances/gap/gap_a/a20100","instances/gap/gap_a/a20200"};
 
-    ReadInstance instance("instances/real/real_instance");
-    //ReadInstance instance("instances/gap/gap_e/e20100");
+    //ReadInstance instance("instances/real/real_instance");
+    ReadInstance instance("instances/gap/gap_e/e20100");
 
-    Heuristica2 heuristica(instance);
+    MetaHeuristica solucion(instance);
 
-    heuristica.solve();
+    solucion.heuristica_0();
 
-    cout << heuristica.getObjectiveValue() << endl;
+    cout << solucion.getObjectiveValue() << endl;
 
-    cout << heuristica.getSolucion().getVendedoresAsignados() << endl;
+    cout << solucion._solucion.getVendedoresAsignados() << endl;
 
-    heuristica.relocate();
+    solucion.relocate();
 
-    cout << heuristica.getSolucion().getVendedoresAsignados() << endl;
+    cout << solucion._solucion.getVendedoresAsignados() << endl;
 
-    cout << heuristica.getObjectiveValue() << endl;
+    cout << solucion.getObjectiveValue() << endl;
 
 
     // for (auto i : filenames){
