@@ -25,7 +25,7 @@ class ReadInstance
         // vector de longitud m. capacidad[i] contiene la capacidad del depósito i
         std::vector<int> capacidades;
 
-        //int demanda_maxima;
+        int demanda_maxima;
 	
 	private:
 

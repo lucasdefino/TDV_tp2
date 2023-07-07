@@ -68,7 +68,7 @@ void Heuristica1::swap() {
                 //aux.unassign(dep_j,j,_instance);
                 aux.assign(dep_i,j,_instance);
                 aux.assign(dep_j,i,_instance);
-                if (aux.getObjectiveValue() < best_sol.getObjectiveValue()){
+                if (aux.objective_value < best_sol.objective_value){
                     best_sol = aux;
                 }
             }
@@ -82,7 +82,7 @@ void Heuristica1::swap() {
 }
 
 double Heuristica1::getObjectiveValue() const {
-    return this->_solucion.getObjectiveValue();
+    return this->_solucion.objective_value;
 }
 
 Solucion Heuristica1::getSolucion() const {

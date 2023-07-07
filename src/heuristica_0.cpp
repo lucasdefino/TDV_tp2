@@ -7,7 +7,6 @@ Heuristica0::Heuristica0() {}
 Heuristica0::Heuristica0(ReadInstance &instance) {
     this->_instance = instance;
     this->_solucion = Solucion(instance);
-    this->_objective_value = 0;
 }
 //POV VENDEDORES
 void Heuristica0::solve() {    
@@ -32,12 +31,12 @@ void Heuristica0::solve() {
 
         if (deposito_mas_barato != -1) {
             this->_solucion.assign(deposito_mas_barato,j,_instance);
-            _objective_value += this->_instance.costos[deposito_mas_barato][j];
         }
         j++;
     }
 
-    //_objective_value += this->_solucion.getVendedoresAsignado()*this->_instance.demanda_maxima*3;
+    
+    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.demanda_maxima*3;
 
 }
 
@@ -59,7 +58,7 @@ void Heuristica0::swap() {
                 int dep_j = aux.getDepositoAsignado(j);
                 aux.assign(dep_i,j,_instance);
                 aux.assign(dep_j,i,_instance);
-                if (aux.getObjectiveValue() < best_sol.getObjectiveValue()){
+                if (aux.objective_value < best_sol.objective_value){
                     best_sol = aux;
                 }
             }
@@ -85,7 +84,7 @@ void Heuristica0::relocate() {
             if(capres >=0){              
                 Solucion aux = this->_solucion; 
                 aux.assign(i,j,_instance);
-                if (aux.getObjectiveValue() < best_sol.getObjectiveValue()){
+                if (aux.objective_value < best_sol.objective_value){
                     cout << "hola" << endl;
                     best_sol = aux;
                 }
@@ -99,7 +98,7 @@ void Heuristica0::relocate() {
 
 
 double Heuristica0::getObjectiveValue() const {
-    return this->_solucion.getObjectiveValue();
+    return this->_solucion.objective_value;
 }
 
 Solucion Heuristica0::getSolucion() const {

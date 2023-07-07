@@ -24,9 +24,6 @@ class Heuristica0
 	
 	private:
         ReadInstance _instance;
-        
-        double _objective_value;
-        std::vector<int> _capacidades_restantes;
 
 };
 
