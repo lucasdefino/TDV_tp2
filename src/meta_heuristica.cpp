@@ -171,6 +171,25 @@ void MetaHeuristica::relocate() {
     this->_solucion = best_sol;
 }
 
+void MetaHeuristica::vnd() {
+    int k = 0;
+    int contador = 0;
+    while(k<2 && contador<2000){
+        contador++;
+        MetaHeuristica aux = *this;
+        if(k==0){
+            aux.swap();
+        } else if (k==1) {
+            aux.relocate();
+        }
+        if(aux.getObjectiveValue() < this->_solucion.objective_value){
+            this->_solucion = aux._solucion;
+            k=0;
+        } else {
+            k += 1;
+        }
+    }
+}
 
 double MetaHeuristica::getObjectiveValue() const {
     return this->_solucion.objective_value;

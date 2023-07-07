@@ -10,47 +10,45 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-    //vector<string> filenames = {"instances/gap/gap_a/a05100","instances/gap/gap_a/a05200","instances/gap/gap_a/a10100","instances/gap/gap_a/a10200","instances/gap/gap_a/a20100","instances/gap/gap_a/a20200"};
+    //vector<string> filenames = {"instances/gap/gap_e/e05100","instances/gap/gap_e/e05200","instances/gap/gap_e/e10100","instances/gap/gap_e/e10200","instances/gap/gap_e/e20100","instances/gap/gap_e/e20200"};
+    vector<string> filenames = {"instances/real/real_instance"};
+
 
     //ReadInstance instance("instances/real/real_instance");
-    ReadInstance instance("instances/gap/gap_e/e20100");
+    // ReadInstance instance("instances/gap/gap_e/e20100");
 
-    MetaHeuristica solucion(instance);
+    // MetaHeuristica solucion(instance);
 
-    solucion.heuristica_0();
+    // solucion.heuristica_0();
 
-    cout << solucion.getObjectiveValue() << endl;
+    // cout << solucion.getObjectiveValue() << endl;
 
-    cout << solucion._solucion.getVendedoresAsignados() << endl;
+    // cout << solucion._solucion.getVendedoresAsignados() << endl;
 
-    solucion.relocate();
+    // solucion.vnd();
 
-    cout << solucion._solucion.getVendedoresAsignados() << endl;
+    // cout << solucion._solucion.getVendedoresAsignados() << endl;
 
-    cout << solucion.getObjectiveValue() << endl;
+    // cout << solucion.getObjectiveValue() << endl;
 
 
-    // for (auto i : filenames){
+    for (auto i : filenames){
 
-    //     ReadInstance instance(i);
+        ReadInstance instance(i);
 
-    //     cout << instance.capacidades[0]  << endl;
+        MetaHeuristica solucion(instance);
 
-    //     Heuristica0 heuristica0(instance);
-    //     Heuristica1 heuristica1(instance);
-    //     Heuristica2 heuristica2(instance);
+        solucion.heuristica_2();
 
-    //     heuristica0.solve();
-    //     heuristica1.solve();
-    //     heuristica2.solve();
+        cout << solucion.getObjectiveValue();
+        
+        solucion.vnd();
 
-    //     //cout << heuristica0.getObjectiveValue() << " " << heuristica1.getObjectiveValue() << " " << heuristica2.getObjectiveValue() << endl;
+        cout << " -> " << solucion.getObjectiveValue() << endl;
 
-    // }
+    }
 
-    // heuristica.swap();
 
-    // cout << heuristica.getObjectiveValue() << endl;
 
     return 0;
 }
