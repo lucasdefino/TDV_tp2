@@ -23,7 +23,6 @@ class Heuristica1
 	private:
         ReadInstance _instance;
         Solucion _solucion;
-        double _objective_value;
 
 };
 

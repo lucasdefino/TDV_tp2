@@ -9,16 +9,19 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-    vector<string> filenames = {"instances/gap/gap_e/e05100","instances/gap/gap_e/e05200","instances/gap/gap_e/e10100","instances/gap/gap_e/e10200","instances/gap/gap_e/e20100","instances/gap/gap_e/e20200"};
+    //vector<string> filenames = {"instances/gap/gap_a/a05100","instances/gap/gap_a/a05200","instances/gap/gap_a/a10100","instances/gap/gap_a/a10200","instances/gap/gap_a/a20100","instances/gap/gap_a/a20200"};
 
-    ReadInstance instance(filenames[0]);
+    ReadInstance instance("instances/real/real_instance");
 
-    Heuristica0 heuristica0(instance);
+    Heuristica2 heuristica(instance);
 
-    heuristica0.solve();
+    heuristica.solve();
 
-    cout << heuristica0.getSolucion().getVendedoresAsignados() << endl;
-    cout << heuristica0.getObjectiveValue() << endl;
+    cout << heuristica.getObjectiveValue() << endl;
+
+    heuristica.swap();
+
+    cout << heuristica.getObjectiveValue() << endl;
 
 
     // for (auto i : filenames){

@@ -7,7 +7,6 @@ Heuristica1::Heuristica1() {}
 Heuristica1::Heuristica1(ReadInstance &instance) {
     this->_instance = instance;
     this->_solucion = Solucion(instance);
-    this->_objective_value = 0;
 }
 //POV DEPOSITOS
 void Heuristica1::solve() {
@@ -38,13 +37,12 @@ void Heuristica1::solve() {
 
             if (vendedor_mas_barato != -1) {
                 this->_solucion.assign(i,vendedor_mas_barato,_instance);
-                _objective_value += this->_instance.costos[i][vendedor_mas_barato];
             }
         }
         i++;
     }
     
-    //_objective_value += this->_solucion.getVendedoresAsignado()*this->_instance.demanda_maxima*3;
+    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.demanda_maxima*3;
 
 }
 
@@ -54,28 +52,27 @@ void Heuristica1::swap() {
 
     int i = 0;
     while(i < this->_instance.n){
-
-        int j = i+1;
-        while (j<this->_instance.n){
-            int capres_dep_i = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(i)) + this->_instance.demandas[i] - this->_instance.demandas[j];
-            int capres_dep_j = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(j)) + this->_instance.demandas[j] - this->_instance.demandas[i];
-            
-            if( capres_dep_i >=0 && capres_dep_j >=0 ){              
-                Solucion aux = this->_solucion; 
-                int dep_i = aux.getDepositoAsignado(i);
-                //aux.unassign(dep_i,i,_instance);
-                int dep_j = aux.getDepositoAsignado(j);
-                //aux.unassign(dep_j,j,_instance);
-                aux.assign(dep_i,j,_instance);
-                aux.assign(dep_j,i,_instance);
-                if (aux.objective_value < best_sol.objective_value){
-                    best_sol = aux;
+        if (this->_solucion.isVendedorAsignado(i)){
+            int j = i+1;
+            while (j<this->_instance.n){
+                if (this->_solucion.isVendedorAsignado(j)){
+                    int capres_dep_i = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(i)) + this->_instance.demandas[i] - this->_instance.demandas[j];
+                    int capres_dep_j = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(j)) + this->_instance.demandas[j] - this->_instance.demandas[i];
+                    
+                    if( capres_dep_i >=0 && capres_dep_j >=0 ){              
+                        Solucion aux = this->_solucion; 
+                        int dep_i = aux.getDepositoAsignado(i);
+                        int dep_j = aux.getDepositoAsignado(j);
+                        aux.assign(dep_i,j,_instance);
+                        aux.assign(dep_j,i,_instance);
+                        if (aux.objective_value < best_sol.objective_value){
+                            best_sol = aux;
+                        }
+                    }
                 }
+                j++;
             }
-            j++;
-
         }
-
         i++;
     }
     this->_solucion = best_sol;
