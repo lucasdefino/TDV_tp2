@@ -17,12 +17,12 @@ class Solucion
         bool isVendedorAsignado(int vendedor) const;
         int getVendedoresAsignados() const;
         int getDepositoAsignado(int vendedor) const;
-        int getCapacidadRestante(int deposito) const;
         int getDemanda(int vendedor) const;
 
         //friend std::ostream& operator<<(std::ostream& os, const Solucion& solution);
 	
         double objective_value;
+        std::vector<int> capacidades_restantes;
 
 	private:
         int _n;
@@ -30,7 +30,6 @@ class Solucion
         int _vendedores_asignados;
         
         std::vector<int> _asigancion_vendedores;
-        std::vector<int> _capacidades_restantes;
         std::vector<int> _demandas;
         
 };

@@ -8,7 +8,7 @@ Solucion::Solucion(ReadInstance &instance) {
     this->objective_value = 0;
     this->_vendedores_asignados = 0;
     this->_asigancion_vendedores = std::vector<int>(instance.n, -1);
-    this->_capacidades_restantes = instance.capacidades;
+    this->capacidades_restantes = instance.capacidades;
     this->_demandas = instance.demandas;
 }
 
@@ -23,13 +23,13 @@ int Solucion::getM() const {
 void Solucion::assign(int deposito, int vendedor, ReadInstance &instance) {
     if(this->_asigancion_vendedores[vendedor] != -1){
         this->_vendedores_asignados--;
-        this->_capacidades_restantes[this->_asigancion_vendedores[vendedor]] += instance.demandas[vendedor];
+        this->capacidades_restantes[this->_asigancion_vendedores[vendedor]] += instance.demandas[vendedor];
         this->objective_value -= instance.costos[this->_asigancion_vendedores[vendedor]][vendedor];
     }
     
     this->_asigancion_vendedores[vendedor] = deposito;
     this->_vendedores_asignados++;
-    this->_capacidades_restantes[deposito] -= instance.demandas[vendedor];
+    this->capacidades_restantes[deposito] -= instance.demandas[vendedor];
     this->objective_value += instance.costos[deposito][vendedor];
 }
 
@@ -39,10 +39,6 @@ bool Solucion::isVendedorAsignado(int vendedor) const {
 
 int Solucion::getDepositoAsignado(int vendedor) const {
     return this->_asigancion_vendedores[vendedor];
-}
-
-int Solucion::getCapacidadRestante(int deposito) const {
-    return this->_capacidades_restantes[deposito];
 }
 
 int Solucion::getVendedoresAsignados() const {

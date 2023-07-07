@@ -21,7 +21,7 @@ void MetaHeuristica::heuristica_0() {
             
             if (costo_actual < menor_costo){
 
-                if(_solucion.getCapacidadRestante(i)-this->_instance.demandas[j] >= 0){
+                if(_solucion.capacidades_restantes[i]-this->_instance.demandas[j] >= 0){
                     deposito_mas_barato=i;
                     menor_costo=costo_actual;
                 }
@@ -57,7 +57,7 @@ void MetaHeuristica::heuristica_1() {
                     
                     if (costo_actual < menor_costo){
 
-                        if(this->_solucion.getCapacidadRestante(i)-this->_instance.demandas[j] >= 0){
+                        if(this->_solucion.capacidades_restantes[i]-this->_instance.demandas[j] >= 0){
                             vendedor_mas_barato=j;
                             menor_costo=costo_actual;
                         }
@@ -91,7 +91,7 @@ void MetaHeuristica::heuristica_2() {
                 double costo_actual = this->_instance.costos[i][k];
 
                 if (costo_actual < menor_costo){
-                    if(this->_solucion.getCapacidadRestante(i)-this->_instance.demandas[k] >= 0){
+                    if(this->_solucion.capacidades_restantes[i]-this->_instance.demandas[k] >= 0){
                         vendedor_mas_barato=k;
                         menor_costo=costo_actual;
                     }
@@ -123,8 +123,8 @@ void MetaHeuristica::swap() {
             int j = i+1;
             while (j<this->_instance.n){
                 if (this->_solucion.isVendedorAsignado(j)){
-                    int capres_dep_i = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(i)) + this->_instance.demandas[i] - this->_instance.demandas[j];
-                    int capres_dep_j = this->_solucion.getCapacidadRestante(this->_solucion.getDepositoAsignado(j)) + this->_instance.demandas[j] - this->_instance.demandas[i];
+                    int capres_dep_i = this->_solucion.capacidades_restantes[this->_solucion.getDepositoAsignado(i)] + this->_instance.demandas[i] - this->_instance.demandas[j];
+                    int capres_dep_j = this->_solucion.capacidades_restantes[this->_solucion.getDepositoAsignado(j)] + this->_instance.demandas[j] - this->_instance.demandas[i];
                     
                     if( capres_dep_i >=0 && capres_dep_j >=0 ){              
                         Solucion aux = this->_solucion; 
@@ -146,28 +146,39 @@ void MetaHeuristica::swap() {
 }
 
 void MetaHeuristica::relocate() {
-    
+    int aux_i = 0;
+    int aux_j = 0;
+
     Solucion best_sol = this->_solucion;
     int j = 0;
     while(j < this->_instance.n){
         int i = 0;
         while (i < this->_instance.m){
-            int capres = this->_solucion.getCapacidadRestante(i) - this->_instance.demandas[j];
+            int capres = this->_solucion.capacidades_restantes[i] - this->_instance.demandas[j];
             if(capres >=0){              
                 Solucion aux = this->_solucion;
-                if (this->_solucion.isVendedorAsignado(i)==false){
-                    aux.objective_value -= this->_instance.demanda_maxima*3; 
-                } 
+                //if (i==4 && j==8){cout << aux.objective_value << endl;}
                 aux.assign(i,j,_instance);
+
+                //if (i==4 && j==8){cout << (this->_solucion.isVendedorAsignado(j)==true) << endl;}
+                
+                if (this->_solucion.isVendedorAsignado(j)==0){
+                    aux.objective_value -= this->_instance.demanda_maxima*3; 
+                }
+
+                //if (i==4 && j==8){cout << aux.objective_value << endl;}
+
                 if (aux.objective_value < best_sol.objective_value){
                     best_sol = aux;
+                    aux_i = i;
+                    aux_j = j;
                 }
             }
             i++;
         }
         j++;
     }
-    
+    //cout << aux_i << "  " << aux_j << endl;
     this->_solucion = best_sol;
 }
 
