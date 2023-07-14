@@ -35,7 +35,7 @@ class MetaHeuristica
         void vnd(int max_iter);
 
         // ILS
-        void ils(int max_iter,int cant_ran);
+        void ils(int max_iter, float porcentaje_pert);
 
         void perturbacion(int cant_ran);
 

@@ -42,7 +42,7 @@ void MetaHeuristica::heuristica_0() {
     }
 
     
-    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.demanda_maxima*3;
+    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.costo_maximo*3;
 
 }
 
@@ -80,7 +80,7 @@ void MetaHeuristica::heuristica_1() {
         i++;
     }
     
-    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.demanda_maxima*3;
+    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.costo_maximo*3;
 
 }
 
@@ -119,7 +119,7 @@ void MetaHeuristica::heuristica_2() {
         j++;
     }
 
-    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.demanda_maxima*3;
+    this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.costo_maximo*3;
 }
 
 // /////////// Operador de Búsqueda Local 1 - Swap ///////////
@@ -166,9 +166,9 @@ void MetaHeuristica::swap() {
 
 /////////// Operador de Búsqueda Local 2 - Relocate ///////////
 void MetaHeuristica::relocate() {
-    bool foundImprovement = true;
-	while (foundImprovement) {
-		foundImprovement = false;
+    bool haymejora = true;
+	while (haymejora) {
+		haymejora = false;
         Solucion best_sol = this->_solucion;
         int j = 0;
         while(j < this->_instance.n){
@@ -179,11 +179,11 @@ void MetaHeuristica::relocate() {
                     Solucion aux = this->_solucion;
                     aux.assign(i,j,_instance);
                     if (this->_solucion.isVendedorAsignado(j)==0){
-                        aux.objective_value -= this->_instance.demanda_maxima*3; 
+                        aux.objective_value -= this->_instance.costo_maximo*3; 
                     }
                     if (aux.objective_value < best_sol.objective_value){
                         best_sol = aux;
-                        foundImprovement = false;
+                        haymejora = false;
                     }
                 }
                 i++;
@@ -217,18 +217,18 @@ void MetaHeuristica::vnd(int max_iter) {
 }
 
 /////////// ILS ///////////
-void MetaHeuristica::ils(int max_iter, int cant_ran) {
+void MetaHeuristica::ils(int max_iter, float porcentaje_pert) {
     Solucion best_sol = this->_solucion;
     MetaHeuristica aux = *this;
     int contador = 0;
     while (contador<max_iter) {
         contador++;
-        aux.swap();
-        //aux.vnd(max_iter);
+        //aux.swap();
+        aux.vnd(max_iter/2);
         if(aux.getObjectiveValue() < best_sol.objective_value){
             best_sol = aux._solucion;
         }
-        aux.perturbacion(cant_ran); 
+        aux.perturbacion((this->_instance.n)*porcentaje_pert); 
     }
     this->_solucion = best_sol;
 
