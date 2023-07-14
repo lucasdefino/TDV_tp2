@@ -22,16 +22,43 @@ int Solucion::getM() const {
 
 void Solucion::assign(int deposito, int vendedor, ReadInstance &instance) {
     //si el vendedor estaba asignado a otro deposito lo desasigno primero
-    if(this->_asigancion_vendedores[vendedor] != -1){
+        if(this->_asigancion_vendedores[vendedor] != -1){
+            this->_vendedores_asignados--;
+            this->capacidades_restantes[this->_asigancion_vendedores[vendedor]] += instance.demandas[vendedor];
+            this->objective_value -= instance.costos[this->_asigancion_vendedores[vendedor]][vendedor];
+        }
+        
+        this->_asigancion_vendedores[vendedor] = deposito;
+        this->_vendedores_asignados++;
+        this->capacidades_restantes[deposito] -= instance.demandas[vendedor];
+        this->objective_value += instance.costos[deposito][vendedor];
+}
+
+void Solucion::reassign(int deposito, int vendedor, ReadInstance &instance) {
+    if(deposito == -1){
+        if(this->_asigancion_vendedores[vendedor] != -1){
+            
+        } else {
         this->_vendedores_asignados--;
         this->capacidades_restantes[this->_asigancion_vendedores[vendedor]] += instance.demandas[vendedor];
         this->objective_value -= instance.costos[this->_asigancion_vendedores[vendedor]][vendedor];
+        this->objective_value += 3*instance.demanda_maxima;
+        }
+    } else {
+        //si el vendedor estaba asignado a otro deposito lo desasigno primero
+        if(this->_asigancion_vendedores[vendedor] != -1){
+            this->_vendedores_asignados--;
+            this->capacidades_restantes[this->_asigancion_vendedores[vendedor]] += instance.demandas[vendedor];
+            this->objective_value -= instance.costos[this->_asigancion_vendedores[vendedor]][vendedor];
+            this->objective_value += 3*instance.demanda_maxima;
+        }
+        
+        this->_asigancion_vendedores[vendedor] = deposito;
+        this->_vendedores_asignados++;
+        this->capacidades_restantes[deposito] -= instance.demandas[vendedor];
+        this->objective_value += instance.costos[deposito][vendedor];
+        this->objective_value -= 3*instance.demanda_maxima;
     }
-    
-    this->_asigancion_vendedores[vendedor] = deposito;
-    this->_vendedores_asignados++;
-    this->capacidades_restantes[deposito] -= instance.demandas[vendedor];
-    this->objective_value += instance.costos[deposito][vendedor];
 }
 
 bool Solucion::isVendedorAsignado(int vendedor) const {

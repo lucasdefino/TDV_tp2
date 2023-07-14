@@ -1,6 +1,11 @@
 #include "meta_heuristica.h"
 #include <iostream>
+#include <random>
+#include <vector>
+#include <algorithm>
+#include <limits>
 using namespace std;
+
 
 MetaHeuristica::MetaHeuristica() {}
 
@@ -14,7 +19,7 @@ void MetaHeuristica::heuristica_0() {
     int j = 0;
     while(j < this->_instance.n){
         int i = 0;
-        double menor_costo = 999;
+        double menor_costo = std::numeric_limits<double>::max();
         int deposito_mas_barato = -1;
 
         while (i < this->_instance.m){
@@ -50,7 +55,7 @@ void MetaHeuristica::heuristica_1() {
 
         while (vendedor_mas_barato != -1){
             int j = 0;
-            double menor_costo = 999;
+            double menor_costo = std::numeric_limits<double>::max();
             vendedor_mas_barato = -1;
 
             while (j < this->_instance.n){
@@ -87,7 +92,7 @@ void MetaHeuristica::heuristica_2() {
     while(j < this->_instance.n){
         int vendedor_mas_barato = -1;
         int k = 0;
-        double menor_costo = 999;
+        double menor_costo = std::numeric_limits<double>::max();
 
         while (k < this->_instance.n){
             if (_solucion.isVendedorAsignado(k)==false){
@@ -117,73 +122,84 @@ void MetaHeuristica::heuristica_2() {
     this->_solucion.objective_value += (_instance.n - this->_solucion.getVendedoresAsignados())*this->_instance.demanda_maxima*3;
 }
 
-/////////// Operador de Búsqueda Local 1 - Swap ///////////
+// /////////// Operador de Búsqueda Local 1 - Swap ///////////
 void MetaHeuristica::swap() {
-    Solucion best_sol = this->_solucion;
-
-    int i = 0;
-    while(i < this->_instance.n){
-        if (this->_solucion.isVendedorAsignado(i)){
+	bool haymejora = true;
+	while (haymejora) {
+		haymejora = false;
+        Solucion best_sol = this->_solucion;
+        int i = 0;
+        while(i < this->_instance.n){
             int j = i+1;
             while (j<this->_instance.n){
-                if (this->_solucion.isVendedorAsignado(j)){
-                    int capres_dep_i = this->_solucion.capacidades_restantes[this->_solucion.getDepositoAsignado(i)] + this->_instance.demandas[i] - this->_instance.demandas[j];
-                    int capres_dep_j = this->_solucion.capacidades_restantes[this->_solucion.getDepositoAsignado(j)] + this->_instance.demandas[j] - this->_instance.demandas[i];
+                if (this->_solucion.isVendedorAsignado(i)==0 && this->_solucion.isVendedorAsignado(j)==0){
                     
+                } else {
+                    int capres_dep_i = 0;
+                    int capres_dep_j = 0;
+                    if (this->_solucion.isVendedorAsignado(i)){
+                        int capres_dep_i = this->_solucion.capacidades_restantes[this->_solucion.getDepositoAsignado(i)] + this->_instance.demandas[i] - this->_instance.demandas[j];
+                    }
+                    if (this->_solucion.isVendedorAsignado(j)){
+                        int capres_dep_j = this->_solucion.capacidades_restantes[this->_solucion.getDepositoAsignado(j)] + this->_instance.demandas[j] - this->_instance.demandas[i];
+                    }
                     if( capres_dep_i >=0 && capres_dep_j >=0 ){              
                         Solucion aux = this->_solucion; 
                         int dep_i = aux.getDepositoAsignado(i);
                         int dep_j = aux.getDepositoAsignado(j);
-                        aux.assign(dep_i,j,_instance);
-                        aux.assign(dep_j,i,_instance);
+                        aux.reassign(dep_i,j,_instance);
+                        aux.reassign(dep_j,i,_instance);
                         if (aux.objective_value < best_sol.objective_value){
                             best_sol = aux;
+                            haymejora = true;
                         }
                     }
                 }
                 j++;
             }
+            i++;
         }
-        i++;
-    }
-    this->_solucion = best_sol;
+        this->_solucion = best_sol;
+
+	}
 }
 
 /////////// Operador de Búsqueda Local 2 - Relocate ///////////
 void MetaHeuristica::relocate() {
-    int aux_i = 0;
-    int aux_j = 0;
-
-    Solucion best_sol = this->_solucion;
-    int j = 0;
-    while(j < this->_instance.n){
-        int i = 0;
-        while (i < this->_instance.m){
-            int capres = this->_solucion.capacidades_restantes[i] - this->_instance.demandas[j];
-            if(capres >=0){              
-                Solucion aux = this->_solucion;
-                aux.assign(i,j,_instance);
-                if (this->_solucion.isVendedorAsignado(j)==0){
-                    aux.objective_value -= this->_instance.demanda_maxima*3; 
+    bool foundImprovement = true;
+	while (foundImprovement) {
+		foundImprovement = false;
+        Solucion best_sol = this->_solucion;
+        int j = 0;
+        while(j < this->_instance.n){
+            int i = 0;
+            while (i < this->_instance.m){
+                int capres = this->_solucion.capacidades_restantes[i] - this->_instance.demandas[j];
+                if(capres >=0){              
+                    Solucion aux = this->_solucion;
+                    aux.assign(i,j,_instance);
+                    if (this->_solucion.isVendedorAsignado(j)==0){
+                        aux.objective_value -= this->_instance.demanda_maxima*3; 
+                    }
+                    if (aux.objective_value < best_sol.objective_value){
+                        best_sol = aux;
+                        foundImprovement = false;
+                    }
                 }
-                if (aux.objective_value < best_sol.objective_value){
-                    best_sol = aux;
-                    aux_i = i;
-                    aux_j = j;
-                }
+                i++;
             }
-            i++;
+            j++;
         }
-        j++;
+        this->_solucion = best_sol;
+
     }
-    this->_solucion = best_sol;
 }
 
 /////////// Metaheuristica Variable Neighborhood Descent ///////////
-void MetaHeuristica::vnd() {
+void MetaHeuristica::vnd(int max_iter) {
     int k = 0;
     int contador = 0;
-    while(k<2){
+    while(k<2 && contador<max_iter){
         contador++;
         MetaHeuristica aux = *this;
         if(k==0){
@@ -198,6 +214,62 @@ void MetaHeuristica::vnd() {
             k += 1;
         }
     }
+}
+
+/////////// ILS ///////////
+void MetaHeuristica::ils(int max_iter, int cant_ran) {
+    Solucion best_sol = this->_solucion;
+    MetaHeuristica aux = *this;
+    int contador = 0;
+    while (contador<max_iter) {
+        contador++;
+        aux.swap();
+        //aux.vnd(max_iter);
+        if(aux.getObjectiveValue() < best_sol.objective_value){
+            best_sol = aux._solucion;
+        }
+        aux.perturbacion(cant_ran); 
+    }
+    this->_solucion = best_sol;
+
+}
+
+void MetaHeuristica::perturbacion(int cant_ran) {
+    random_device rd;
+    mt19937 generator(rd());
+    uniform_int_distribution<int> distribution(0, this->_instance.n-1);
+
+    vector<int> randomNumbers;
+    while (randomNumbers.size() < cant_ran) {
+        int randomNumber = distribution(generator);
+        if (find(randomNumbers.begin(), randomNumbers.end(), randomNumber) == randomNumbers.end()) {
+            randomNumbers.push_back(randomNumber);
+        }
+    }
+
+    for(auto i : randomNumbers){
+        for(auto j : randomNumbers){
+            if ((this->_solucion.isVendedorAsignado(i)==0 && this->_solucion.isVendedorAsignado(j)==0) || (j==i)){
+            } else {
+                int capres_dep_i = 0;
+                int capres_dep_j = 0;
+                if (this->_solucion.isVendedorAsignado(i)){
+                    int capres_dep_i = this->_solucion.capacidades_restantes[this->_solucion.getDepositoAsignado(i)] + this->_instance.demandas[i] - this->_instance.demandas[j];
+                }
+                if (this->_solucion.isVendedorAsignado(j)){
+                    int capres_dep_j = this->_solucion.capacidades_restantes[this->_solucion.getDepositoAsignado(j)] + this->_instance.demandas[j] - this->_instance.demandas[i];
+                }
+                if( capres_dep_i >=0 && capres_dep_j >=0 ){              
+                    int dep_i = this->_solucion.getDepositoAsignado(i);
+                    int dep_j = this->_solucion.getDepositoAsignado(j);
+                    this->_solucion.reassign(dep_i,j,_instance);
+                    this->_solucion.reassign(dep_j,i,_instance);
+                }
+            }
+            j++;
+        }
+    }
+        
 }
 
 double MetaHeuristica::getObjectiveValue() const {

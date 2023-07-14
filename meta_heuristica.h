@@ -32,7 +32,12 @@ class MetaHeuristica
         void relocate();
 
         // Metaheuristica Variable Neighborhood Descent
-        void vnd();
+        void vnd(int max_iter);
+
+        // ILS
+        void ils(int max_iter,int cant_ran);
+
+        void perturbacion(int cant_ran);
 
         Solucion _solucion;
 	

@@ -16,6 +16,7 @@ class Solucion
 
         // assign realiza las operaciones necesarias para asociar a un vendedor con un deposito
         void assign(int deposito, int vendedor, ReadInstance &instance);
+        void reassign(int deposito, int vendedor, ReadInstance &instance);
 
         // devuelve true si el vendedor ya fue asignado a un deposito
         bool isVendedorAsignado(int vendedor) const;
