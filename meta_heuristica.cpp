@@ -225,8 +225,8 @@ void MetaHeuristica::ils(int max_iter, float porcentaje_pert) {
     int contador = 0;
     while (contador<max_iter) {
         contador++;
-        //aux.swap();
-        //aux.vnd(max_iter/2);
+        //aux.relocate();
+        aux.vnd(50, 1);
         if(aux.getObjectiveValue() < best_sol.objective_value){
             best_sol = aux._solucion;
         }
