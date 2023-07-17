@@ -32,7 +32,7 @@ class MetaHeuristica
         void relocate();
 
         // Metaheuristica Variable Neighborhood Descent
-        void vnd(int max_iter);
+        void vnd(int max_iter, bool orden);
 
         // ILS
         void ils(int max_iter, float porcentaje_pert);

@@ -196,16 +196,18 @@ void MetaHeuristica::relocate() {
 }
 
 /////////// Metaheuristica Variable Neighborhood Descent ///////////
-void MetaHeuristica::vnd(int max_iter) {
+void MetaHeuristica::vnd(int max_iter, bool orden) {
     int k = 0;
     int contador = 0;
     while(k<2 && contador<max_iter){
         contador++;
         MetaHeuristica aux = *this;
         if(k==0){
-            aux.swap();
+            if (orden == 0){aux.swap();}
+            else {aux.relocate();}
         } else if (k==1) {
-            aux.relocate();
+            if (orden == 1){aux.swap();}
+            else {aux.relocate();}
         }
         if(aux.getObjectiveValue() < this->_solucion.objective_value){
             this->_solucion = aux._solucion;
@@ -224,7 +226,7 @@ void MetaHeuristica::ils(int max_iter, float porcentaje_pert) {
     while (contador<max_iter) {
         contador++;
         //aux.swap();
-        aux.vnd(max_iter/2);
+        //aux.vnd(max_iter/2);
         if(aux.getObjectiveValue() < best_sol.objective_value){
             best_sol = aux._solucion;
         }
