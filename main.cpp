@@ -136,11 +136,10 @@ int main(int argc, char** argv) {
 }
 
 /////////////////EXPERIMENTACION DE PRUEBA////////////////////////////
-
-/*
+/*  ATENCION:
     Debido a que correr todas las instancias de GAP al mismo tiempo tarda demasiado tiempo,
-    en el caso de que se quiera correr instancias por separado para prbar dejamos código comentado. Para poder correrlo
-    simplemente comentar el main de arriba y descomentar el main de abajo.
+    en el caso de que se quiera correr instancias por separado para probar dejamos código comentado. 
+    Para poder correrlo simplemente comentar el main de arriba y descomentar el main de abajo.
 */
 // int main(int argc, char** argv) {
 
