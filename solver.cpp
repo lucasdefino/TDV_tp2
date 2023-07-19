@@ -1,4 +1,4 @@
-#include "meta_heuristica.h"
+#include "solver.h"
 #include <iostream>
 #include <random>
 #include <vector>
@@ -7,15 +7,15 @@
 using namespace std;
 
 
-MetaHeuristica::MetaHeuristica() {}
+Solver::Solver() {}
 
-MetaHeuristica::MetaHeuristica(ReadInstance &instance) {
+Solver::Solver(ReadInstance &instance) {
     this->_instance = instance;
     this->_solucion = Solucion(instance);
 }
 
 /////////// Heurística 0 - Los vendedores eligen ///////////
-void MetaHeuristica::heuristica_0() {    
+void Solver::heuristica_0() {    
     int j = 0;
     while(j < this->_instance.n){
         int i = 0;
@@ -47,7 +47,7 @@ void MetaHeuristica::heuristica_0() {
 }
 
 /////////// Heurística 1 - Los depósitos eligen ///////////
-void MetaHeuristica::heuristica_1() {
+void Solver::heuristica_1() {
     int i = 0;
 
     while(i < this->_instance.m){
@@ -85,7 +85,7 @@ void MetaHeuristica::heuristica_1() {
 }
 
 /////////// Heurística 2 - Capitanes de equipo ///////////
-void MetaHeuristica::heuristica_2() {
+void Solver::heuristica_2() {
     int i = 0;
     int j = 0;
 
@@ -123,7 +123,7 @@ void MetaHeuristica::heuristica_2() {
 }
 
 // /////////// Operador de Búsqueda Local 1 - Swap ///////////
-void MetaHeuristica::swap() {
+void Solver::swap() {
 	bool haymejora = true;
 	while (haymejora) {
 		haymejora = false;
@@ -165,7 +165,7 @@ void MetaHeuristica::swap() {
 }
 
 /////////// Operador de Búsqueda Local 2 - Relocate ///////////
-void MetaHeuristica::relocate() {
+void Solver::relocate() {
     bool haymejora = true;
 	while (haymejora) {
 		haymejora = false;
@@ -195,13 +195,13 @@ void MetaHeuristica::relocate() {
     }
 }
 
-/////////// Metaheuristica Variable Neighborhood Descent ///////////
-void MetaHeuristica::vnd(int max_iter, bool orden) {
+/////////// Variable Neighborhood Descent ///////////
+void Solver::vnd(int max_iter, bool orden) {
     int k = 0;
     int contador = 0;
     while(k<2 && contador<max_iter){
         contador++;
-        MetaHeuristica aux = *this;
+        Solver aux = *this;
         if(k==0){
             if (orden == 0){aux.swap();}
             else {aux.relocate();}
@@ -219,24 +219,23 @@ void MetaHeuristica::vnd(int max_iter, bool orden) {
 }
 
 /////////// ILS ///////////
-void MetaHeuristica::ils(int max_iter, float porcentaje_pert) {
+void Solver::ils(int max_iter, float porcentaje_pert, int max_iter_vnd, bool orden) {
     Solucion best_sol = this->_solucion;
-    MetaHeuristica aux = *this;
+    Solver aux = *this;
     int contador = 0;
     while (contador<max_iter) {
         contador++;
-        //aux.relocate();
-        aux.vnd(50, 1);
+        aux.vnd(max_iter_vnd, orden);
         if(aux.getObjectiveValue() < best_sol.objective_value){
             best_sol = aux._solucion;
         }
-        aux.perturbacion((this->_instance.n)*porcentaje_pert); 
+        aux.perturbacion((this->_instance.n)*porcentaje_pert);
     }
     this->_solucion = best_sol;
 
 }
 
-void MetaHeuristica::perturbacion(int cant_ran) {
+void Solver::perturbacion(int cant_ran) {
     random_device rd;
     mt19937 generator(rd());
     uniform_int_distribution<int> distribution(0, this->_instance.n-1);
@@ -274,6 +273,6 @@ void MetaHeuristica::perturbacion(int cant_ran) {
         
 }
 
-double MetaHeuristica::getObjectiveValue() const {
+double Solver::getObjectiveValue() const {
     return this->_solucion.objective_value;
 }

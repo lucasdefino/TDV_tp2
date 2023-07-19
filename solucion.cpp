@@ -42,7 +42,7 @@ void Solucion::reassign(int deposito, int vendedor, ReadInstance &instance) {
         this->_vendedores_asignados--;
         this->capacidades_restantes[this->_asigancion_vendedores[vendedor]] += instance.demandas[vendedor];
         this->objective_value -= instance.costos[this->_asigancion_vendedores[vendedor]][vendedor];
-        this->objective_value += 3*instance.demanda_maxima;
+        this->objective_value += 3*instance.costo_maximo;
         }
     } else {
         //si el vendedor estaba asignado a otro deposito lo desasigno primero
@@ -50,14 +50,14 @@ void Solucion::reassign(int deposito, int vendedor, ReadInstance &instance) {
             this->_vendedores_asignados--;
             this->capacidades_restantes[this->_asigancion_vendedores[vendedor]] += instance.demandas[vendedor];
             this->objective_value -= instance.costos[this->_asigancion_vendedores[vendedor]][vendedor];
-            this->objective_value += 3*instance.demanda_maxima;
+            this->objective_value += 3*instance.costo_maximo;
         }
         
         this->_asigancion_vendedores[vendedor] = deposito;
         this->_vendedores_asignados++;
         this->capacidades_restantes[deposito] -= instance.demandas[vendedor];
         this->objective_value += instance.costos[deposito][vendedor];
-        this->objective_value -= 3*instance.demanda_maxima;
+        this->objective_value -= 3*instance.costo_maximo;
     }
 }
 

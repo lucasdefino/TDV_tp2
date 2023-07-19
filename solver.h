@@ -1,5 +1,5 @@
-#ifndef META_HEURISTICA_H
-#define META_HEURISTICA_H
+#ifndef SOLVER_H
+#define SOLVER_H
 
 #include <cstdint>
 #include <vector>
@@ -8,11 +8,11 @@
 #include "solucion.h"
 
 
-class MetaHeuristica
+class Solver
 {
 	public:
-        MetaHeuristica();
-        MetaHeuristica(ReadInstance &instance);
+        Solver();
+        Solver(ReadInstance &instance);
 
         double getObjectiveValue() const;
 
@@ -31,11 +31,11 @@ class MetaHeuristica
         // Operador de Búsqueda Local 2 - Relocate 
         void relocate();
 
-        // Metaheuristica Variable Neighborhood Descent
+        // Solver Variable Neighborhood Descent
         void vnd(int max_iter, bool orden);
 
         // ILS
-        void ils(int max_iter, float porcentaje_pert);
+        void ils(int max_iter, float porcentaje_pert, int max_iter_vnd, bool orden);
 
         void perturbacion(int cant_ran);
 
